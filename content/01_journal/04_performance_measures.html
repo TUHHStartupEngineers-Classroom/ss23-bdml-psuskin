@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Philip Suskin">
+
+<title>MyLabJournal - Performance Measures</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/icons/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">MyLabJournal</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-journal" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Journal</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-journal">    
+        <li>
+    <a class="dropdown-item" href="../../content/01_journal/01_fundamentals.html">
+ <span class="dropdown-text">01 Machine Learning Fundamentals</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../content/01_journal/02_regression.html">
+ <span class="dropdown-text">02 Supervised ML - Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../content/01_journal/03_automated_ml.html">
+ <span class="dropdown-text">03 Automated Machine Learning with H2O</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../content/01_journal/04_performance_measures.html">
+ <span class="dropdown-text">04 Performance Measures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../content/01_journal/05_black_box.html">
+ <span class="dropdown-text">05 Explaining Black-Box Models With LIME</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../content/01_journal/06_deep_learning.html">
+ <span class="dropdown-text">06 Deep Learning</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../content/02_notes/05_class_notes.html">
+ <span class="menu-text">Class notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../content/03_other/06_links.html">
+ <span class="menu-text">Links</span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#libraries" id="toc-libraries" class="nav-link active" data-scroll-target="#libraries"><span class="toc-section-number">1</span>  Libraries</a></li>
+  <li><a href="#data-and-model-preparation" id="toc-data-and-model-preparation" class="nav-link" data-scroll-target="#data-and-model-preparation"><span class="toc-section-number">2</span>  Data and model preparation</a>
+  <ul class="collapse">
+  <li><a href="#leaderboard-visualization" id="toc-leaderboard-visualization" class="nav-link" data-scroll-target="#leaderboard-visualization"><span class="toc-section-number">2.1</span>  Leaderboard visualization</a></li>
+  <li><a href="#tune-a-model-with-grid-search" id="toc-tune-a-model-with-grid-search" class="nav-link" data-scroll-target="#tune-a-model-with-grid-search"><span class="toc-section-number">2.2</span>  Tune a model with grid search</a></li>
+  </ul></li>
+  <li><a href="#visualize-the-trade-off-between-the-precision-and-the-recall-and-the-optimal-threshold" id="toc-visualize-the-trade-off-between-the-precision-and-the-recall-and-the-optimal-threshold" class="nav-link" data-scroll-target="#visualize-the-trade-off-between-the-precision-and-the-recall-and-the-optimal-threshold"><span class="toc-section-number">3</span>  Visualize the trade off between the precision and the recall and the optimal threshold</a>
+  <ul class="collapse">
+  <li><a href="#roc-plot" id="toc-roc-plot" class="nav-link" data-scroll-target="#roc-plot"><span class="toc-section-number">3.1</span>  ROC Plot</a></li>
+  <li><a href="#precision-vs-recall-plot" id="toc-precision-vs-recall-plot" class="nav-link" data-scroll-target="#precision-vs-recall-plot"><span class="toc-section-number">3.2</span>  Precision vs Recall Plot</a></li>
+  <li><a href="#gain-chart" id="toc-gain-chart" class="nav-link" data-scroll-target="#gain-chart"><span class="toc-section-number">3.3</span>  Gain Chart</a></li>
+  <li><a href="#lift-chart" id="toc-lift-chart" class="nav-link" data-scroll-target="#lift-chart"><span class="toc-section-number">3.4</span>  Lift Chart</a></li>
+  <li><a href="#dashboard-with-cowplot" id="toc-dashboard-with-cowplot" class="nav-link" data-scroll-target="#dashboard-with-cowplot"><span class="toc-section-number">3.5</span>  Dashboard with cowplot</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Performance Measures</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Philip Suskin </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="libraries" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Libraries</h1>
+<div class="cell" data-hash="04_performance_measures_cache/html/unnamed-chunk-1_1497c74eaaf89105049b00fa82246dda">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#&gt; ✔ dplyr     1.1.2     ✔ readr     2.1.4
+#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.0
+#&gt; ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+#&gt; ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+#&gt; ✔ purrr     1.0.1     
+#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#&gt; ✖ dplyr::filter() masks stats::filter()
+#&gt; ✖ dplyr::lag()    masks stats::lag()
+#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(h2o)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; 
+#&gt; ----------------------------------------------------------------------
+#&gt; 
+#&gt; Your next step is to start H2O:
+#&gt;     &gt; h2o.init()
+#&gt; 
+#&gt; For H2O package documentation, ask for help:
+#&gt;     &gt; ??h2o
+#&gt; 
+#&gt; After starting H2O, you can use the Web UI at http://localhost:54321
+#&gt; For more information visit https://docs.h2o.ai
+#&gt; 
+#&gt; ----------------------------------------------------------------------
+#&gt; 
+#&gt; 
+#&gt; Attaching package: 'h2o'
+#&gt; 
+#&gt; The following objects are masked from 'package:lubridate':
+#&gt; 
+#&gt;     day, hour, month, week, year
+#&gt; 
+#&gt; The following objects are masked from 'package:stats':
+#&gt; 
+#&gt;     cor, sd, var
+#&gt; 
+#&gt; The following objects are masked from 'package:base':
+#&gt; 
+#&gt;     %*%, %in%, &amp;&amp;, ||, apply, as.factor, as.numeric, colnames,
+#&gt;     colnames&lt;-, ifelse, is.character, is.factor, is.numeric, log,
+#&gt;     log10, log1p, log2, round, signif, trunc</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">library</span>(rsample)</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">library</span>(recipes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; 
+#&gt; Attaching package: 'recipes'
+#&gt; 
+#&gt; The following object is masked from 'package:stringr':
+#&gt; 
+#&gt;     fixed
+#&gt; 
+#&gt; The following object is masked from 'package:stats':
+#&gt; 
+#&gt;     step</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(cowplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; 
+#&gt; Attaching package: 'cowplot'
+#&gt; 
+#&gt; The following object is masked from 'package:lubridate':
+#&gt; 
+#&gt;     stamp</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">library</span>(glue)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-and-model-preparation" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Data and model preparation</h1>
+<div class="cell" data-hash="04_performance_measures_cache/html/unnamed-chunk-2_303b944ebf2fdf34359f66f1fbf6f1f7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>product_backorders_tbl <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../../product_backorders.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Rows: 19053 Columns: 23
+#&gt; ── Column specification ────────────────────────────────────────────────────────
+#&gt; Delimiter: ","
+#&gt; chr  (7): potential_issue, deck_risk, oe_constraint, ppap_risk, stop_auto_bu...
+#&gt; dbl (16): sku, national_inv, lead_time, in_transit_qty, forecast_3_month, fo...
+#&gt; 
+#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.
+#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>split_obj <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">initial_split</span>(product_backorders_tbl, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a>train_readable_tb1 <span class="ot">&lt;-</span> <span class="fu">training</span>(split_obj)</span>
+<span id="cb12-6"><a href="#cb12-6"></a>test_readable_tb1  <span class="ot">&lt;-</span> <span class="fu">testing</span>(split_obj)</span>
+<span id="cb12-7"><a href="#cb12-7"></a></span>
+<span id="cb12-8"><a href="#cb12-8"></a>factor_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"went_on_backorder"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9"></a>recipie <span class="ot">&lt;-</span> <span class="fu">recipe</span>(went_on_backorder <span class="sc">~</span> ., <span class="at">data =</span> train_readable_tb1) <span class="sc">%&gt;%</span>  </span>
+<span id="cb12-10"><a href="#cb12-10"></a>           <span class="fu">step_zv</span>(<span class="fu">all_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-11"><a href="#cb12-11"></a>           <span class="fu">step_mutate_at</span>(factor_names, <span class="at">fn =</span> as.factor) <span class="sc">%&gt;%</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>           <span class="fu">step_center</span>(<span class="fu">all_numeric</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>           <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a>           <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-15"><a href="#cb12-15"></a>           <span class="fu">prep</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
+#&gt; ℹ Please use `all_of()` or `any_of()` instead.
+#&gt;   # Was:
+#&gt;   data %&gt;% select(factor_names)
+#&gt; 
+#&gt;   # Now:
+#&gt;   data %&gt;% select(all_of(factor_names))
+#&gt; 
+#&gt; See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>training <span class="ot">&lt;-</span> <span class="fu">bake</span>(recipie, <span class="at">new_data =</span> train_readable_tb1)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>testing  <span class="ot">&lt;-</span> <span class="fu">bake</span>(recipie, <span class="at">new_data =</span> test_readable_tb1)</span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="fu">h2o.init</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; H2O is not running yet, starting it now...
+#&gt; 
+#&gt; Note:  In case of errors look at the following log files:
+#&gt;     C:\Users\psusk\AppData\Local\Temp\RtmpcFHaIX\file59883a1067d7/h2o_psusk_started_from_r.out
+#&gt;     C:\Users\psusk\AppData\Local\Temp\RtmpcFHaIX\file598859ec29a3/h2o_psusk_started_from_r.err
+#&gt; 
+#&gt; 
+#&gt; Starting H2O JVM and connecting:  Connection successful!
+#&gt; 
+#&gt; R is connected to the H2O cluster: 
+#&gt;     H2O cluster uptime:         2 seconds 144 milliseconds 
+#&gt;     H2O cluster timezone:       Europe/Berlin 
+#&gt;     H2O data parsing timezone:  UTC 
+#&gt;     H2O cluster version:        3.40.0.4 
+#&gt;     H2O cluster version age:    1 month and 15 days 
+#&gt;     H2O cluster name:           H2O_started_from_R_psusk_wps853 
+#&gt;     H2O cluster total nodes:    1 
+#&gt;     H2O cluster total memory:   3.54 GB 
+#&gt;     H2O cluster total cores:    16 
+#&gt;     H2O cluster allowed cores:  16 
+#&gt;     H2O cluster healthy:        TRUE 
+#&gt;     H2O Connection ip:          localhost 
+#&gt;     H2O Connection port:        54321 
+#&gt;     H2O Connection proxy:       NA 
+#&gt;     H2O Internal Security:      FALSE 
+#&gt;     R Version:                  R version 4.3.0 (2023-04-21 ucrt)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>split_h2o <span class="ot">&lt;-</span> <span class="fu">h2o.splitFrame</span>(<span class="fu">as.h2o</span>(training), <span class="at">ratios =</span> <span class="fu">c</span>(<span class="fl">0.75</span>), <span class="at">seed =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>train_h2o <span class="ot">&lt;-</span> split_h2o[[<span class="dv">1</span>]]</span>
+<span id="cb18-2"><a href="#cb18-2"></a>valid_h2o <span class="ot">&lt;-</span> split_h2o[[<span class="dv">2</span>]]</span>
+<span id="cb18-3"><a href="#cb18-3"></a>test_h2o  <span class="ot">&lt;-</span> <span class="fu">as.h2o</span>(testing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>y <span class="ot">&lt;-</span> <span class="st">"went_on_backorder"</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>x <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(train_h2o), y)</span>
+<span id="cb20-3"><a href="#cb20-3"></a></span>
+<span id="cb20-4"><a href="#cb20-4"></a>h2o_model <span class="ot">&lt;-</span> <span class="fu">h2o.automl</span>(<span class="at">x =</span> x,</span>
+<span id="cb20-5"><a href="#cb20-5"></a>                        <span class="at">y =</span> y,</span>
+<span id="cb20-6"><a href="#cb20-6"></a>                        <span class="at">training_frame    =</span> train_h2o,</span>
+<span id="cb20-7"><a href="#cb20-7"></a>                        <span class="at">validation_frame  =</span> valid_h2o,</span>
+<span id="cb20-8"><a href="#cb20-8"></a>                        <span class="at">leaderboard_frame =</span> test_h2o,</span>
+<span id="cb20-9"><a href="#cb20-9"></a>                        <span class="at">max_runtime_secs  =</span> <span class="dv">30</span>,</span>
+<span id="cb20-10"><a href="#cb20-10"></a>                        <span class="at">nfolds            =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |===                                                                   |   4%
+#&gt; 07:17:00.610: User specified a validation frame with cross-validation still enabled. Please note that the models will still be validated using cross-validation only, the validation frame will be used to provide purely informative validation metrics on the trained models.
+#&gt; 07:17:00.625: AutoML: XGBoost is not available; skipping it.
+  |                                                                            
+  |========                                                              |  11%
+  |                                                                            
+  |============                                                          |  18%
+  |                                                                            
+  |=================                                                     |  25%
+  |                                                                            
+  |=======================                                               |  32%
+  |                                                                            
+  |===============================                                       |  44%
+  |                                                                            
+  |====================================                                  |  51%
+  |                                                                            
+  |=========================================                             |  58%
+  |                                                                            
+  |==============================================                        |  65%
+  |                                                                            
+  |==================================================                    |  72%
+  |                                                                            
+  |=======================================================               |  79%
+  |                                                                            
+  |============================================================          |  86%
+  |                                                                            
+  |=================================================================     |  93%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+</div>
+<section id="leaderboard-visualization" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="leaderboard-visualization"><span class="header-section-number">2.1</span> Leaderboard visualization</h2>
+<div class="cell" data-hash="04_performance_measures_cache/html/unnamed-chunk-3_5fb7001c051c67bba2f1ecec6fcdf056">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>gain_tf_tbl <span class="ot">&lt;-</span> h2o_model<span class="sc">@</span>leaderboard <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>                   <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>                   <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(aucpr, mean_per_class_error, rmse, mse)) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4"></a>                   <span class="fu">mutate</span>(<span class="at">model_type =</span> <span class="fu">str_extract</span>(model_id, <span class="st">"[^_]+"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>                   <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-6"><a href="#cb22-6"></a>                   <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">"rowname"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>                   <span class="fu">mutate</span>(</span>
+<span id="cb22-8"><a href="#cb22-8"></a>                     <span class="at">model_id   =</span> <span class="fu">as_factor</span>(model_id),</span>
+<span id="cb22-9"><a href="#cb22-9"></a>                     <span class="at">model_type =</span> <span class="fu">as.factor</span>(model_type)</span>
+<span id="cb22-10"><a href="#cb22-10"></a>                   ) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-11"><a href="#cb22-11"></a>                   <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(model_id, model_type, rowname), </span>
+<span id="cb22-12"><a href="#cb22-12"></a>                                <span class="at">names_to =</span> <span class="st">"key"</span>, </span>
+<span id="cb22-13"><a href="#cb22-13"></a>                                <span class="at">values_to =</span> <span class="st">"value"</span>, </span>
+<span id="cb22-14"><a href="#cb22-14"></a>                                <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">key =</span> forcats<span class="sc">::</span>fct_inorder)</span>
+<span id="cb22-15"><a href="#cb22-15"></a>                   )</span>
+<span id="cb22-16"><a href="#cb22-16"></a></span>
+<span id="cb22-17"><a href="#cb22-17"></a><span class="co"># Visualize Data</span></span>
+<span id="cb22-18"><a href="#cb22-18"></a>gain_tf_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb22-19"><a href="#cb22-19"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, model_id, <span class="at">color =</span> model_type)) <span class="sc">+</span></span>
+<span id="cb22-20"><a href="#cb22-20"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb22-21"><a href="#cb22-21"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(value, <span class="dv">3</span>), <span class="at">hjust =</span> <span class="st">"inward"</span>), <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb22-22"><a href="#cb22-22"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Leaderboard Metrics"</span>,</span>
+<span id="cb22-23"><a href="#cb22-23"></a>       <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Ordered by: "</span>, <span class="st">"AUC"</span>),</span>
+<span id="cb22-24"><a href="#cb22-24"></a>       <span class="at">y =</span> <span class="st">"Model Postion, Model ID"</span>, <span class="at">x =</span> <span class="st">""</span>) <span class="sc">+</span> </span>
+<span id="cb22-25"><a href="#cb22-25"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="04_performance_measures_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="04_performance_measures_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tune-a-model-with-grid-search" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="tune-a-model-with-grid-search"><span class="header-section-number">2.2</span> Tune a model with grid search</h2>
+<div class="cell" data-hash="04_performance_measures_cache/html/unnamed-chunk-4_322fc829fc2523790c2a70d3eb41eca5">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>deeplearning_grid <span class="ot">&lt;-</span> <span class="fu">h2o.grid</span>(<span class="at">algorithm =</span> <span class="st">"deeplearning"</span>,</span>
+<span id="cb23-2"><a href="#cb23-2"></a>                              <span class="at">grid_id =</span> <span class="st">"deeplearning_grid"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3"></a>                              <span class="co"># prediction/response</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>                              <span class="at">x =</span> x,</span>
+<span id="cb23-5"><a href="#cb23-5"></a>                              <span class="at">y =</span> y,</span>
+<span id="cb23-6"><a href="#cb23-6"></a>                              <span class="co"># training and validation</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a>                              <span class="at">training_frame   =</span> train_h2o,</span>
+<span id="cb23-8"><a href="#cb23-8"></a>                              <span class="at">validation_frame =</span> valid_h2o,</span>
+<span id="cb23-9"><a href="#cb23-9"></a>                              <span class="at">nfolds =</span> <span class="dv">5</span>,</span>
+<span id="cb23-10"><a href="#cb23-10"></a>                              <span class="at">hyper_params =</span> <span class="fu">list</span>(</span>
+<span id="cb23-11"><a href="#cb23-11"></a>                                <span class="at">hidden =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>), <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">10</span>), <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>)),</span>
+<span id="cb23-12"><a href="#cb23-12"></a>                                <span class="at">epochs =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>))</span>
+<span id="cb23-13"><a href="#cb23-13"></a>                              )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">h2o.getGrid</span>(<span class="at">grid_id =</span> <span class="st">"deeplearning_grid"</span>, <span class="at">sort_by =</span> <span class="st">"auc"</span>, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; H2O Grid Details
+#&gt; ================
+#&gt; 
+#&gt; Grid ID: deeplearning_grid 
+#&gt; Used hyper parameters: 
+#&gt;   -  epochs 
+#&gt;   -  hidden 
+#&gt; Number of models: 15 
+#&gt; Number of failed models: 0 
+#&gt; 
+#&gt; Hyper-Parameter Search Summary: ordered by decreasing auc
+#&gt;       epochs       hidden                  model_ids     auc
+#&gt; 1   78.01643 [10, 10, 10]  deeplearning_grid_model_4 0.88980
+#&gt; 2  104.00032 [50, 20, 10] deeplearning_grid_model_10 0.87869
+#&gt; 3   77.99793 [20, 20, 20] deeplearning_grid_model_14 0.87048
+#&gt; 4   78.01162 [50, 20, 10]  deeplearning_grid_model_9 0.86551
+#&gt; 5  103.99517 [10, 10, 10]  deeplearning_grid_model_5 0.85969
+#&gt; 6  104.01460 [20, 20, 20] deeplearning_grid_model_15 0.85708
+#&gt; 7   52.00089 [20, 20, 20] deeplearning_grid_model_13 0.85446
+#&gt; 8   51.99906 [50, 20, 10]  deeplearning_grid_model_8 0.85368
+#&gt; 9   52.00229 [10, 10, 10]  deeplearning_grid_model_3 0.84996
+#&gt; 10  25.99587 [50, 20, 10]  deeplearning_grid_model_7 0.83504
+#&gt; 11  26.00055 [20, 20, 20] deeplearning_grid_model_12 0.83207
+#&gt; 12  25.99802 [10, 10, 10]  deeplearning_grid_model_2 0.81657
+#&gt; 13  10.39792 [20, 20, 20] deeplearning_grid_model_11 0.77804
+#&gt; 14  10.39699 [10, 10, 10]  deeplearning_grid_model_1 0.77264
+#&gt; 15  10.39001 [50, 20, 10]  deeplearning_grid_model_6 0.76630</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>best_grid_model <span class="ot">&lt;-</span> <span class="fu">h2o.getModel</span>(deeplearning_grid<span class="sc">@</span>model_ids[[<span class="dv">1</span>]])</span>
+<span id="cb27-2"><a href="#cb27-2"></a></span>
+<span id="cb27-3"><a href="#cb27-3"></a>best_grid_model <span class="sc">%&gt;%</span> <span class="fu">h2o.auc</span>(<span class="at">train =</span> T, <span class="at">valid =</span> T, <span class="at">xval =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;     train     valid      xval 
+#&gt; 0.9039726 0.8931867 0.8897960</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>best_grid_model <span class="sc">%&gt;%</span> <span class="fu">h2o.saveModel</span>(<span class="at">path =</span> <span class="st">"h2o_models/"</span>,<span class="at">force=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "C:\\Users\\psusk\\Documents\\R Repository\\ss23-bdml-psuskin\\content\\01_journal\\h2o_models\\deeplearning_grid_model_4"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">h2o.getModel</span>(deeplearning_grid<span class="sc">@</span>model_ids[[<span class="dv">2</span>]]) <span class="sc">%&gt;%</span> <span class="fu">h2o.saveModel</span>(<span class="at">path =</span> <span class="st">"h2o_models/"</span>,<span class="at">force=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "C:\\Users\\psusk\\Documents\\R Repository\\ss23-bdml-psuskin\\content\\01_journal\\h2o_models\\deeplearning_grid_model_10"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">h2o.getModel</span>(deeplearning_grid<span class="sc">@</span>model_ids[[<span class="dv">3</span>]]) <span class="sc">%&gt;%</span> <span class="fu">h2o.saveModel</span>(<span class="at">path =</span> <span class="st">"h2o_models/"</span>,<span class="at">force=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "C:\\Users\\psusk\\Documents\\R Repository\\ss23-bdml-psuskin\\content\\01_journal\\h2o_models\\deeplearning_grid_model_14"</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="visualize-the-trade-off-between-the-precision-and-the-recall-and-the-optimal-threshold" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Visualize the trade off between the precision and the recall and the optimal threshold</h1>
+<div class="cell" data-hash="04_performance_measures_cache/html/unnamed-chunk-5_c70c63847055e73a392a701e4b2ed22e">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>performance <span class="ot">&lt;-</span> <span class="fu">h2o.performance</span>(best_grid_model, <span class="at">newdata =</span> <span class="fu">as.h2o</span>(testing))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">typeof</span>(performance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "S4"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>performance <span class="sc">%&gt;%</span> <span class="fu">slotNames</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "algorithm" "on_train"  "on_valid"  "on_xval"   "metrics"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>performance<span class="sc">@</span>metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; $model
+#&gt; $model$`__meta`
+#&gt; $model$`__meta`$schema_version
+#&gt; [1] 3
+#&gt; 
+#&gt; $model$`__meta`$schema_name
+#&gt; [1] "ModelKeyV3"
+#&gt; 
+#&gt; $model$`__meta`$schema_type
+#&gt; [1] "Key&lt;Model&gt;"
+#&gt; 
+#&gt; 
+#&gt; $model$name
+#&gt; [1] "deeplearning_grid_model_4"
+#&gt; 
+#&gt; $model$type
+#&gt; [1] "Key&lt;Model&gt;"
+#&gt; 
+#&gt; $model$URL
+#&gt; [1] "/3/Models/deeplearning_grid_model_4"
+#&gt; 
+#&gt; 
+#&gt; $model_checksum
+#&gt; [1] "3996016788900710336"
+#&gt; 
+#&gt; $frame
+#&gt; $frame$name
+#&gt; [1] "testing_sid_ada7_138"
+#&gt; 
+#&gt; 
+#&gt; $frame_checksum
+#&gt; [1] "-9217328979175615432"
+#&gt; 
+#&gt; $description
+#&gt; NULL
+#&gt; 
+#&gt; $scoring_time
+#&gt; [1] 1.686634e+12
+#&gt; 
+#&gt; $predictions
+#&gt; NULL
+#&gt; 
+#&gt; $MSE
+#&gt; [1] 0.07387311
+#&gt; 
+#&gt; $RMSE
+#&gt; [1] 0.2717961
+#&gt; 
+#&gt; $nobs
+#&gt; [1] 4764
+#&gt; 
+#&gt; $custom_metric_name
+#&gt; NULL
+#&gt; 
+#&gt; $custom_metric_value
+#&gt; [1] 0
+#&gt; 
+#&gt; $r2
+#&gt; [1] 0.2900341
+#&gt; 
+#&gt; $logloss
+#&gt; [1] 0.2571341
+#&gt; 
+#&gt; $AUC
+#&gt; [1] 0.8900507
+#&gt; 
+#&gt; $pr_auc
+#&gt; [1] 0.5321544
+#&gt; 
+#&gt; $Gini
+#&gt; [1] 0.7801013
+#&gt; 
+#&gt; $mean_per_class_error
+#&gt; [1] 0.2447445
+#&gt; 
+#&gt; $domain
+#&gt; [1] "No"  "Yes"
+#&gt; 
+#&gt; $cm
+#&gt; $cm$`__meta`
+#&gt; $cm$`__meta`$schema_version
+#&gt; [1] 3
+#&gt; 
+#&gt; $cm$`__meta`$schema_name
+#&gt; [1] "ConfusionMatrixV3"
+#&gt; 
+#&gt; $cm$`__meta`$schema_type
+#&gt; [1] "ConfusionMatrix"
+#&gt; 
+#&gt; 
+#&gt; $cm$table
+#&gt; Confusion Matrix: Row labels: Actual class; Column labels: Predicted class
+#&gt;          No Yes  Error          Rate
+#&gt; No     3977 225 0.0535 = 225 / 4,202
+#&gt; Yes     245 317 0.4359 =   245 / 562
+#&gt; Totals 4222 542 0.0987 = 470 / 4,764
+#&gt; 
+#&gt; 
+#&gt; $thresholds_and_metric_scores
+#&gt; Metrics for Thresholds: Binomial metrics as a function of classification thresholds
+#&gt;   threshold       f1       f2 f0point5 accuracy precision   recall specificity
+#&gt; 1  0.999768 0.027826 0.017691 0.065147 0.882662  0.615385 0.014235    0.998810
+#&gt; 2  0.996098 0.034662 0.022095 0.080386 0.883081  0.666667 0.017794    0.998810
+#&gt; 3  0.991825 0.044750 0.028672 0.101881 0.883501  0.684211 0.023132    0.998572
+#&gt; 4  0.988260 0.048027 0.030851 0.108359 0.883501  0.666667 0.024911    0.998334
+#&gt; 5  0.979868 0.054514 0.035196 0.120846 0.883501  0.640000 0.028470    0.997858
+#&gt;   absolute_mcc min_per_class_accuracy mean_per_class_accuracy  tns fns fps tps
+#&gt; 1     0.080663               0.014235                0.506522 4197 554   5   8
+#&gt; 2     0.095599               0.017794                0.508302 4197 552   5  10
+#&gt; 3     0.111080               0.023132                0.510852 4196 549   6  13
+#&gt; 4     0.113186               0.024911                0.511623 4195 548   7  14
+#&gt; 5     0.117544               0.028470                0.513164 4193 546   9  16
+#&gt;        tnr      fnr      fpr      tpr idx
+#&gt; 1 0.998810 0.985765 0.001190 0.014235   0
+#&gt; 2 0.998810 0.982206 0.001190 0.017794   1
+#&gt; 3 0.998572 0.976868 0.001428 0.023132   2
+#&gt; 4 0.998334 0.975089 0.001666 0.024911   3
+#&gt; 5 0.997858 0.971530 0.002142 0.028470   4
+#&gt; 
+#&gt; ---
+#&gt;     threshold       f1       f2 f0point5 accuracy precision   recall
+#&gt; 395  0.001409 0.235467 0.434816 0.161448 0.235306  0.133476 0.998221
+#&gt; 396  0.001100 0.231436 0.429293 0.158421 0.217884  0.130891 0.998221
+#&gt; 397  0.000794 0.230107 0.427461 0.157425 0.212007  0.130042 0.998221
+#&gt; 398  0.000515 0.224845 0.420344 0.153468 0.186608  0.126662 1.000000
+#&gt; 399  0.000237 0.224396 0.419716 0.153134 0.184509  0.126377 1.000000
+#&gt; 400  0.000069 0.211040 0.400742 0.143236 0.117968  0.117968 1.000000
+#&gt;     specificity absolute_mcc min_per_class_accuracy mean_per_class_accuracy tns
+#&gt; 395    0.133270     0.131592               0.133270                0.565745 560
+#&gt; 396    0.113517     0.119966               0.113517                0.555869 477
+#&gt; 397    0.106854     0.115890               0.106854                0.552537 449
+#&gt; 398    0.077820     0.099282               0.077820                0.538910 327
+#&gt; 399    0.075440     0.097642               0.075440                0.537720 317
+#&gt; 400    0.000000     0.000000               0.000000                0.500000   0
+#&gt;     fns  fps tps      tnr      fnr      fpr      tpr idx
+#&gt; 395   1 3642 561 0.133270 0.001779 0.866730 0.998221 394
+#&gt; 396   1 3725 561 0.113517 0.001779 0.886483 0.998221 395
+#&gt; 397   1 3753 561 0.106854 0.001779 0.893146 0.998221 396
+#&gt; 398   0 3875 562 0.077820 0.000000 0.922180 1.000000 397
+#&gt; 399   0 3885 562 0.075440 0.000000 0.924560 1.000000 398
+#&gt; 400   0 4202 562 0.000000 0.000000 1.000000 1.000000 399
+#&gt; 
+#&gt; $max_criteria_and_metric_scores
+#&gt; Maximum Metrics: Maximum metrics at their respective thresholds
+#&gt;                         metric threshold       value idx
+#&gt; 1                       max f1  0.314773    0.574275 180
+#&gt; 2                       max f2  0.091448    0.649840 296
+#&gt; 3                 max f0point5  0.328123    0.589823 174
+#&gt; 4                 max accuracy  0.342497    0.904072 167
+#&gt; 5                max precision  0.808871    0.743243  32
+#&gt; 6                   max recall  0.000515    1.000000 397
+#&gt; 7              max specificity  0.999768    0.998810   0
+#&gt; 8             max absolute_mcc  0.328123    0.518807 174
+#&gt; 9   max min_per_class_accuracy  0.077010    0.806050 305
+#&gt; 10 max mean_per_class_accuracy  0.047820    0.811065 328
+#&gt; 11                     max tns  0.999768 4197.000000   0
+#&gt; 12                     max fns  0.999768  554.000000   0
+#&gt; 13                     max fps  0.000069 4202.000000 399
+#&gt; 14                     max tps  0.000515  562.000000 397
+#&gt; 15                     max tnr  0.999768    0.998810   0
+#&gt; 16                     max fnr  0.999768    0.985765   0
+#&gt; 17                     max fpr  0.000069    1.000000 399
+#&gt; 18                     max tpr  0.000515    1.000000 397
+#&gt; 
+#&gt; $gains_lift_table
+#&gt; Gains/Lift Table: Avg response rate: 11.80 %, avg score:  9.88 %
+#&gt;    group cumulative_data_fraction lower_threshold     lift cumulative_lift
+#&gt; 1      1               0.01007557        0.899768 6.004448        6.004448
+#&gt; 2      2               0.02015113        0.712906 5.827847        5.916148
+#&gt; 3      3               0.03001679        0.615467 4.869690        5.572207
+#&gt; 4      4               0.04009236        0.540049 5.474644        5.547689
+#&gt; 5      5               0.05016793        0.479810 5.651246        5.568487
+#&gt; 6      6               0.10012594        0.343930 4.737073        5.153652
+#&gt; 7      7               0.15008396        0.231429 2.564431        4.291785
+#&gt; 8      8               0.20004198        0.149866 1.709621        3.646921
+#&gt; 9      9               0.29995802        0.055323 1.139747        2.811781
+#&gt; 10    10               0.40008396        0.030837 0.693077        2.281550
+#&gt; 11    11               0.50000000        0.020077 0.284937        1.882562
+#&gt; 12    12               0.59991604        0.013005 0.302745        1.619444
+#&gt; 13    13               0.70004198        0.007403 0.177712        1.413235
+#&gt; 14    14               0.79995802        0.003462 0.053426        1.243393
+#&gt; 15    15               0.89987406        0.000880 0.035617        1.109289
+#&gt; 16    16               1.00000000        0.000000 0.017771        1.000000
+#&gt;    response_rate    score cumulative_response_rate cumulative_score
+#&gt; 1       0.708333 0.968802                 0.708333         0.968802
+#&gt; 2       0.687500 0.815915                 0.697917         0.892359
+#&gt; 3       0.574468 0.663853                 0.657343         0.817255
+#&gt; 4       0.645833 0.575030                 0.654450         0.756382
+#&gt; 5       0.666667 0.505994                 0.656904         0.706095
+#&gt; 6       0.558824 0.407099                 0.607966         0.556910
+#&gt; 7       0.302521 0.286413                 0.506294         0.466871
+#&gt; 8       0.201681 0.186279                 0.430220         0.396796
+#&gt; 9       0.134454 0.095137                 0.331700         0.296314
+#&gt; 10      0.081761 0.040595                 0.269150         0.232317
+#&gt; 11      0.033613 0.025060                 0.222082         0.190900
+#&gt; 12      0.035714 0.016361                 0.191043         0.161831
+#&gt; 13      0.020964 0.009961                 0.166717         0.140109
+#&gt; 14      0.006303 0.005186                 0.146681         0.123257
+#&gt; 15      0.004202 0.002243                 0.130861         0.109820
+#&gt; 16      0.002096 0.000224                 0.117968         0.098847
+#&gt;    capture_rate cumulative_capture_rate       gain cumulative_gain
+#&gt; 1      0.060498                0.060498 500.444840      500.444840
+#&gt; 2      0.058719                0.119217 482.784698      491.614769
+#&gt; 3      0.048043                0.167260 386.969032      457.220715
+#&gt; 4      0.055160                0.222420 447.464413      454.768870
+#&gt; 5      0.056940                0.279359 465.124555      456.848673
+#&gt; 6      0.236655                0.516014 373.707348      415.365160
+#&gt; 7      0.128114                0.644128 156.443075      329.178508
+#&gt; 8      0.085409                0.729537  70.962050      264.692132
+#&gt; 9      0.113879                0.843416  13.974700      181.178138
+#&gt; 10     0.069395                0.912811 -30.692272      128.154956
+#&gt; 11     0.028470                0.941281 -71.506325       88.256228
+#&gt; 12     0.030249                0.971530 -69.725470       61.944370
+#&gt; 13     0.017794                0.989324 -82.228788       41.323502
+#&gt; 14     0.005338                0.994662 -94.657436       24.339265
+#&gt; 15     0.003559                0.998221 -96.438291       10.928928
+#&gt; 16     0.001779                1.000000 -98.222879        0.000000
+#&gt;    kolmogorov_smirnov
+#&gt; 1            0.057166
+#&gt; 2            0.112316
+#&gt; 3            0.155599
+#&gt; 4            0.206713
+#&gt; 5            0.259845
+#&gt; 6            0.471512
+#&gt; 7            0.560120
+#&gt; 8            0.600313
+#&gt; 9            0.616144
+#&gt; 10           0.581303
+#&gt; 11           0.500301
+#&gt; 12           0.421316
+#&gt; 13           0.327972
+#&gt; 14           0.220745
+#&gt; 15           0.111500
+#&gt; 16           0.000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">h2o.auc</span>(performance, <span class="at">train =</span> T, <span class="at">valid =</span> T, <span class="at">xval =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.8900507</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">h2o.auc</span>(h2o_model, <span class="at">train =</span> T, <span class="at">valid =</span> T, <span class="at">xval =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning in h2o.auc(h2o_model, train = T, valid = T, xval = T): No AUC for
+#&gt; H2OAutoML</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">h2o.giniCoef</span>(performance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.7801013</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">h2o.logloss</span>(performance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.2571341</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">h2o.confusionMatrix</span>(h2o_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; NULL</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">h2o.confusionMatrix</span>(performance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["No"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Yes"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Rate"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"3977","2":"225","3":"0.05354593","4":"=225/4202","_rn_":"No"},{"1":"245","2":"317","3":"0.43594306","4":"=245/562","_rn_":"Yes"},{"1":"4222","2":"542","3":"0.09865659","4":"=470/4764","_rn_":"Totals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>performance_tb1 <span class="ot">&lt;-</span> performance <span class="sc">%&gt;%</span></span>
+<span id="cb54-2"><a href="#cb54-2"></a>    <span class="fu">h2o.metric</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb54-3"><a href="#cb54-3"></a>    <span class="fu">as.tibble</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning: `as.tibble()` was deprecated in tibble 2.0.0.
+#&gt; ℹ Please use `as_tibble()` instead.
+#&gt; ℹ The signature and semantics have changed, see `?as_tibble`.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>performance_tb1 <span class="sc">%&gt;%</span></span>
+<span id="cb56-2"><a href="#cb56-2"></a>    <span class="fu">filter</span>(f1 <span class="sc">==</span> <span class="fu">max</span>(f1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["threshold"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["f1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["f2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["f0point5"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["accuracy"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["precision"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["recall"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["specificity"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["absolute_mcc"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["min_per_class_accuracy"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["mean_per_class_accuracy"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["tns"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["fns"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["fps"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["tps"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["tnr"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["fnr"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["fpr"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["tpr"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["idx"],"name":[20],"type":["int"],"align":["right"]}],"data":[{"1":"0.3147728","2":"0.5742754","3":"0.5681004","4":"0.5805861","5":"0.9013434","6":"0.5848708","7":"0.5640569","8":"0.9464541","9":"0.518612","10":"0.5640569","11":"0.7552555","12":"3977","13":"245","14":"225","15":"317","16":"0.9464541","17":"0.4359431","18":"0.05354593","19":"0.5640569","20":"180"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>performance_tb1 <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="#cb57-2"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> threshold)) <span class="sc">+</span></span>
+<span id="cb57-3"><a href="#cb57-3"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> precision), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb57-4"><a href="#cb57-4"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> recall), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb57-5"><a href="#cb57-5"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">h2o.find_threshold_by_max_metric</span>(performance, <span class="st">"f1"</span>)) <span class="sc">+</span></span>
+<span id="cb57-6"><a href="#cb57-6"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Precision and Recall"</span>, <span class="at">y =</span> <span class="st">"Value"</span>, <span class="at">x=</span><span class="st">"Threshhold"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#&gt; ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="04_performance_measures_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="04_performance_measures_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="roc-plot" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="roc-plot"><span class="header-section-number">3.1</span> ROC Plot</h2>
+<div class="cell" data-hash="04_performance_measures_cache/html/unnamed-chunk-6_ba0ef129d3082a118ffdd42b152194c0">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">h2o.init</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; H2O is not running yet, starting it now...
+#&gt; 
+#&gt; Note:  In case of errors look at the following log files:
+#&gt;     C:\Users\psusk\AppData\Local\Temp\RtmpqoIe2j\filee1c136b79cc/h2o_psusk_started_from_r.out
+#&gt;     C:\Users\psusk\AppData\Local\Temp\RtmpqoIe2j\filee1c6eef5b24/h2o_psusk_started_from_r.err
+#&gt; 
+#&gt; 
+#&gt; Starting H2O JVM and connecting:  Connection successful!
+#&gt; 
+#&gt; R is connected to the H2O cluster: 
+#&gt;     H2O cluster uptime:         2 seconds 342 milliseconds 
+#&gt;     H2O cluster timezone:       Europe/Berlin 
+#&gt;     H2O data parsing timezone:  UTC 
+#&gt;     H2O cluster version:        3.40.0.4 
+#&gt;     H2O cluster version age:    1 month and 15 days 
+#&gt;     H2O cluster name:           H2O_started_from_R_psusk_zon102 
+#&gt;     H2O cluster total nodes:    1 
+#&gt;     H2O cluster total memory:   3.53 GB 
+#&gt;     H2O cluster total cores:    16 
+#&gt;     H2O cluster allowed cores:  16 
+#&gt;     H2O cluster healthy:        TRUE 
+#&gt;     H2O Connection ip:          localhost 
+#&gt;     H2O Connection port:        54321 
+#&gt;     H2O Connection proxy:       NA 
+#&gt;     H2O Internal Security:      FALSE 
+#&gt;     R Version:                  R version 4.3.0 (2023-04-21 ucrt)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>get_models <span class="ot">&lt;-</span> <span class="cf">function</span>(path, testing) {</span>
+<span id="cb61-2"><a href="#cb61-2"></a>    model_h2o <span class="ot">&lt;-</span> <span class="fu">h2o.loadModel</span>(path)</span>
+<span id="cb61-3"><a href="#cb61-3"></a>    performance  <span class="ot">&lt;-</span> <span class="fu">h2o.performance</span>(model_h2o, <span class="at">newdata =</span> <span class="fu">as.h2o</span>(testing)) </span>
+<span id="cb61-4"><a href="#cb61-4"></a>    </span>
+<span id="cb61-5"><a href="#cb61-5"></a>    performance <span class="sc">%&gt;%</span> <span class="fu">h2o.metric</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb61-6"><a href="#cb61-6"></a>                    <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb61-7"><a href="#cb61-7"></a>                    <span class="fu">mutate</span>(<span class="at">auc =</span> <span class="fu">h2o.auc</span>(performance)) <span class="sc">%&gt;%</span></span>
+<span id="cb61-8"><a href="#cb61-8"></a>                    <span class="fu">select</span>(tpr, fpr, auc)</span>
+<span id="cb61-9"><a href="#cb61-9"></a>}</span>
+<span id="cb61-10"><a href="#cb61-10"></a></span>
+<span id="cb61-11"><a href="#cb61-11"></a>metrics_tb1 <span class="ot">&lt;-</span> fs<span class="sc">::</span><span class="fu">dir_info</span>(<span class="at">path =</span> <span class="st">"h2o_models/"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb61-12"><a href="#cb61-12"></a>    <span class="fu">select</span>(path) <span class="sc">%&gt;%</span></span>
+<span id="cb61-13"><a href="#cb61-13"></a>    <span class="fu">mutate</span>(<span class="at">metrics =</span> <span class="fu">map</span>(path, get_models, testing)) <span class="sc">%&gt;%</span></span>
+<span id="cb61-14"><a href="#cb61-14"></a>    <span class="fu">unnest</span>(<span class="at">cols =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%
+#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%
+#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>metrics_tb1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">path =</span> <span class="fu">str_split</span>(path, <span class="at">pattern =</span> <span class="st">"/"</span>, <span class="at">simplify =</span> T)[,<span class="dv">2</span>] <span class="sc">%&gt;%</span> <span class="fu">as_factor</span>(),</span>
+<span id="cb63-2"><a href="#cb63-2"></a>                      <span class="at">auc  =</span> auc <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">3</span>) <span class="sc">%&gt;%</span> <span class="fu">as.character</span>() <span class="sc">%&gt;%</span> <span class="fu">as_factor</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="#cb63-3"></a>                      <span class="fu">ggplot</span>(<span class="fu">aes</span>(fpr, tpr, <span class="at">color =</span> path, <span class="at">linetype =</span> auc)) <span class="sc">+</span></span>
+<span id="cb63-4"><a href="#cb63-4"></a>                      <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb63-5"><a href="#cb63-5"></a>                      <span class="fu">geom_abline</span>(<span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
+<span id="cb63-6"><a href="#cb63-6"></a>                      <span class="fu">theme</span>(</span>
+<span id="cb63-7"><a href="#cb63-7"></a>                        <span class="at">legend.direction =</span> <span class="st">"vertical"</span>,</span>
+<span id="cb63-8"><a href="#cb63-8"></a>                        <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
+<span id="cb63-9"><a href="#cb63-9"></a>                        ) <span class="sc">+</span></span>
+<span id="cb63-10"><a href="#cb63-10"></a>                      <span class="fu">labs</span>(</span>
+<span id="cb63-11"><a href="#cb63-11"></a>                          <span class="at">title =</span> <span class="st">"ROC Plot"</span>,</span>
+<span id="cb63-12"><a href="#cb63-12"></a>                          <span class="at">subtitle =</span> <span class="st">"Top Performing Models Metrics"</span></span>
+<span id="cb63-13"><a href="#cb63-13"></a>                      )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#&gt; ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="04_performance_measures_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="04_performance_measures_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="precision-vs-recall-plot" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="precision-vs-recall-plot"><span class="header-section-number">3.2</span> Precision vs Recall Plot</h2>
+<div class="cell" data-hash="04_performance_measures_cache/html/unnamed-chunk-7_3f55b48e29a591c0de47b9b6f70d2617">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="fu">h2o.init</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; H2O is not running yet, starting it now...
+#&gt; 
+#&gt; Note:  In case of errors look at the following log files:
+#&gt;     C:\Users\psusk\AppData\Local\Temp\RtmpSoO86m\file19b025b11794/h2o_psusk_started_from_r.out
+#&gt;     C:\Users\psusk\AppData\Local\Temp\RtmpSoO86m\file19b03e6c7e4f/h2o_psusk_started_from_r.err
+#&gt; 
+#&gt; 
+#&gt; Starting H2O JVM and connecting:  Connection successful!
+#&gt; 
+#&gt; R is connected to the H2O cluster: 
+#&gt;     H2O cluster uptime:         2 seconds 193 milliseconds 
+#&gt;     H2O cluster timezone:       Europe/Berlin 
+#&gt;     H2O data parsing timezone:  UTC 
+#&gt;     H2O cluster version:        3.40.0.4 
+#&gt;     H2O cluster version age:    1 month and 15 days 
+#&gt;     H2O cluster name:           H2O_started_from_R_psusk_nvo404 
+#&gt;     H2O cluster total nodes:    1 
+#&gt;     H2O cluster total memory:   3.54 GB 
+#&gt;     H2O cluster total cores:    16 
+#&gt;     H2O cluster allowed cores:  16 
+#&gt;     H2O cluster healthy:        TRUE 
+#&gt;     H2O Connection ip:          localhost 
+#&gt;     H2O Connection port:        54321 
+#&gt;     H2O Connection proxy:       NA 
+#&gt;     H2O Internal Security:      FALSE 
+#&gt;     R Version:                  R version 4.3.0 (2023-04-21 ucrt)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>get_models <span class="ot">&lt;-</span> <span class="cf">function</span>(path, testing) {</span>
+<span id="cb67-2"><a href="#cb67-2"></a>    model_h2o <span class="ot">&lt;-</span> <span class="fu">h2o.loadModel</span>(path)</span>
+<span id="cb67-3"><a href="#cb67-3"></a>    perf_h2o  <span class="ot">&lt;-</span> <span class="fu">h2o.performance</span>(model_h2o, <span class="at">newdata =</span> <span class="fu">as.h2o</span>(testing)) </span>
+<span id="cb67-4"><a href="#cb67-4"></a>    </span>
+<span id="cb67-5"><a href="#cb67-5"></a>    perf_h2o <span class="sc">%&gt;%</span> <span class="fu">h2o.metric</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb67-6"><a href="#cb67-6"></a>                 <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb67-7"><a href="#cb67-7"></a>                 <span class="fu">mutate</span>(<span class="at">auc =</span> <span class="fu">h2o.auc</span>(perf_h2o)) <span class="sc">%&gt;%</span></span>
+<span id="cb67-8"><a href="#cb67-8"></a>                 <span class="fu">select</span>(tpr, fpr, auc, precision, recall)</span>
+<span id="cb67-9"><a href="#cb67-9"></a>}</span>
+<span id="cb67-10"><a href="#cb67-10"></a></span>
+<span id="cb67-11"><a href="#cb67-11"></a>metrics_tb1 <span class="ot">&lt;-</span> fs<span class="sc">::</span><span class="fu">dir_info</span>(<span class="at">path =</span> <span class="st">"h2o_models/"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-12"><a href="#cb67-12"></a>               <span class="fu">select</span>(path) <span class="sc">%&gt;%</span></span>
+<span id="cb67-13"><a href="#cb67-13"></a>               <span class="fu">mutate</span>(<span class="at">metrics =</span> <span class="fu">map</span>(path, get_models, testing)) <span class="sc">%&gt;%</span></span>
+<span id="cb67-14"><a href="#cb67-14"></a>               <span class="fu">unnest</span>(<span class="at">cols =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%
+#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%
+#&gt; 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>metrics_tb1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">path =</span> <span class="fu">str_split</span>(path, <span class="at">pattern =</span> <span class="st">"/"</span>, <span class="at">simplify =</span> T)[,<span class="dv">2</span>] <span class="sc">%&gt;%</span> <span class="fu">as_factor</span>(),</span>
+<span id="cb69-2"><a href="#cb69-2"></a>                       <span class="at">auc  =</span> auc <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">3</span>) <span class="sc">%&gt;%</span> <span class="fu">as.character</span>() <span class="sc">%&gt;%</span> <span class="fu">as_factor</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb69-3"><a href="#cb69-3"></a>                <span class="fu">ggplot</span>(<span class="fu">aes</span>(recall, precision, <span class="at">color =</span> path, <span class="at">linetype =</span> auc)) <span class="sc">+</span></span>
+<span id="cb69-4"><a href="#cb69-4"></a>                <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb69-5"><a href="#cb69-5"></a>                <span class="fu">theme</span>(</span>
+<span id="cb69-6"><a href="#cb69-6"></a>                  <span class="at">legend.direction =</span> <span class="st">"vertical"</span>,</span>
+<span id="cb69-7"><a href="#cb69-7"></a>                  <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
+<span id="cb69-8"><a href="#cb69-8"></a>                  ) <span class="sc">+</span></span>
+<span id="cb69-9"><a href="#cb69-9"></a>                <span class="fu">labs</span>(</span>
+<span id="cb69-10"><a href="#cb69-10"></a>                    <span class="at">title =</span> <span class="st">"Precision vs Recall Plot"</span>,</span>
+<span id="cb69-11"><a href="#cb69-11"></a>                    <span class="at">subtitle =</span> <span class="st">"Top Performing Models"</span></span>
+<span id="cb69-12"><a href="#cb69-12"></a>                )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#&gt; ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="04_performance_measures_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="04_performance_measures_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gain-chart" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="gain-chart"><span class="header-section-number">3.3</span> Gain Chart</h2>
+<div class="cell" data-hash="04_performance_measures_cache/html/unnamed-chunk-8_9686550a3f964928dc21fc68e48e9f25">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>lifted_tb1 <span class="ot">&lt;-</span> performance <span class="sc">%&gt;%</span></span>
+<span id="cb71-2"><a href="#cb71-2"></a>            <span class="fu">h2o.gainsLift</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb71-3"><a href="#cb71-3"></a>            <span class="fu">as.tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning: `as.tibble()` was deprecated in tibble 2.0.0.
+#&gt; ℹ Please use `as_tibble()` instead.
+#&gt; ℹ The signature and semantics have changed, see `?as_tibble`.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>gain_tf_tb1 <span class="ot">&lt;-</span> lifted_tb1 <span class="sc">%&gt;%</span> </span>
+<span id="cb73-2"><a href="#cb73-2"></a>                   <span class="fu">select</span>(group, </span>
+<span id="cb73-3"><a href="#cb73-3"></a>                          cumulative_data_fraction, </span>
+<span id="cb73-4"><a href="#cb73-4"></a>                          cumulative_capture_rate, </span>
+<span id="cb73-5"><a href="#cb73-5"></a>                          cumulative_lift) <span class="sc">%&gt;%</span></span>
+<span id="cb73-6"><a href="#cb73-6"></a>                   <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">"lift"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb73-7"><a href="#cb73-7"></a>                   <span class="fu">mutate</span>(<span class="at">baseline =</span> cumulative_data_fraction) <span class="sc">%&gt;%</span></span>
+<span id="cb73-8"><a href="#cb73-8"></a>                   <span class="fu">rename</span>(<span class="at">gain     =</span> cumulative_capture_rate) <span class="sc">%&gt;%</span></span>
+<span id="cb73-9"><a href="#cb73-9"></a>                   <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(gain, baseline), <span class="at">values_to =</span> <span class="st">"value"</span>, <span class="at">names_to =</span> <span class="st">"key"</span>)</span>
+<span id="cb73-10"><a href="#cb73-10"></a></span>
+<span id="cb73-11"><a href="#cb73-11"></a>gain_tf_tb1 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_data_fraction, <span class="at">y =</span> value, <span class="at">color =</span> key)) <span class="sc">+</span></span>
+<span id="cb73-12"><a href="#cb73-12"></a>                    <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb73-13"><a href="#cb73-13"></a>                    <span class="fu">labs</span>(</span>
+<span id="cb73-14"><a href="#cb73-14"></a>                        <span class="at">title =</span> <span class="st">"Gain Chart"</span>,</span>
+<span id="cb73-15"><a href="#cb73-15"></a>                        <span class="at">x =</span> <span class="st">"Data Fraction (Cumulative)"</span>,</span>
+<span id="cb73-16"><a href="#cb73-16"></a>                        <span class="at">y =</span> <span class="st">"Gain"</span></span>
+<span id="cb73-17"><a href="#cb73-17"></a>                    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="04_performance_measures_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="04_performance_measures_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="lift-chart" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="lift-chart"><span class="header-section-number">3.4</span> Lift Chart</h2>
+<div class="cell" data-hash="04_performance_measures_cache/html/unnamed-chunk-9_bc9acba4da34db3f43ec31c533d273ab">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>lift_tf_tb1 <span class="ot">&lt;-</span> lifted_tb1 <span class="sc">%&gt;%</span> </span>
+<span id="cb74-2"><a href="#cb74-2"></a>               <span class="fu">select</span>(group, cumulative_data_fraction, cumulative_capture_rate, cumulative_lift) <span class="sc">%&gt;%</span></span>
+<span id="cb74-3"><a href="#cb74-3"></a>               <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">"capture"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb74-4"><a href="#cb74-4"></a>               <span class="fu">mutate</span>(<span class="at">baseline =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb74-5"><a href="#cb74-5"></a>               <span class="fu">rename</span>(<span class="at">lift =</span> cumulative_lift) <span class="sc">%&gt;%</span></span>
+<span id="cb74-6"><a href="#cb74-6"></a>               <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(lift, baseline), <span class="at">values_to =</span> <span class="st">"value"</span>, <span class="at">names_to =</span> <span class="st">"key"</span>)</span>
+<span id="cb74-7"><a href="#cb74-7"></a></span>
+<span id="cb74-8"><a href="#cb74-8"></a>lift_tf_tb1 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumulative_data_fraction, <span class="at">y =</span> value, <span class="at">color =</span> key)) <span class="sc">+</span></span>
+<span id="cb74-9"><a href="#cb74-9"></a>                <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb74-10"><a href="#cb74-10"></a>                <span class="fu">labs</span>(</span>
+<span id="cb74-11"><a href="#cb74-11"></a>                    <span class="at">title =</span> <span class="st">"Lift Chart"</span>,</span>
+<span id="cb74-12"><a href="#cb74-12"></a>                    <span class="at">x =</span> <span class="st">"Data Fraction (Cumulative)"</span>,</span>
+<span id="cb74-13"><a href="#cb74-13"></a>                    <span class="at">y =</span> <span class="st">"Lift"</span></span>
+<span id="cb74-14"><a href="#cb74-14"></a>                ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="04_performance_measures_files/figure-html/unnamed-chunk-9-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="04_performance_measures_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="dashboard-with-cowplot" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="dashboard-with-cowplot"><span class="header-section-number">3.5</span> Dashboard with cowplot</h2>
+<div class="cell" data-hash="04_performance_measures_cache/html/unnamed-chunk-10_ec88afbd16f18eeff14eb7d32a4fd360">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="co"># h2o.init()</span></span>
+<span id="cb75-2"><a href="#cb75-2"></a><span class="co"># # set values to test the function while building it</span></span>
+<span id="cb75-3"><a href="#cb75-3"></a><span class="co"># h2o_leaderboard &lt;- h2o_model@leaderboard</span></span>
+<span id="cb75-4"><a href="#cb75-4"></a><span class="co"># newdata &lt;- testing</span></span>
+<span id="cb75-5"><a href="#cb75-5"></a><span class="co"># order_by &lt;- "auc"</span></span>
+<span id="cb75-6"><a href="#cb75-6"></a><span class="co"># max_models &lt;- 4</span></span>
+<span id="cb75-7"><a href="#cb75-7"></a><span class="co"># size &lt;- 1</span></span>
+<span id="cb75-8"><a href="#cb75-8"></a><span class="co"># </span></span>
+<span id="cb75-9"><a href="#cb75-9"></a><span class="co"># plot_h2o_performance &lt;- function(h2o_leaderboard, newdata, order_by = c("auc", "logloss"),</span></span>
+<span id="cb75-10"><a href="#cb75-10"></a><span class="co">#                                  max_models = 3, size = 1.5) {</span></span>
+<span id="cb75-11"><a href="#cb75-11"></a><span class="co">#     </span></span>
+<span id="cb75-12"><a href="#cb75-12"></a><span class="co">#     # Inputs</span></span>
+<span id="cb75-13"><a href="#cb75-13"></a><span class="co">#     </span></span>
+<span id="cb75-14"><a href="#cb75-14"></a><span class="co">#     leaderboard_tbl &lt;- h2o_leaderboard %&gt;%</span></span>
+<span id="cb75-15"><a href="#cb75-15"></a><span class="co">#         as_tibble() %&gt;%</span></span>
+<span id="cb75-16"><a href="#cb75-16"></a><span class="co">#         slice(1:max_models)</span></span>
+<span id="cb75-17"><a href="#cb75-17"></a><span class="co">#     </span></span>
+<span id="cb75-18"><a href="#cb75-18"></a><span class="co">#     newdata_tbl &lt;- newdata %&gt;%</span></span>
+<span id="cb75-19"><a href="#cb75-19"></a><span class="co">#         as_tibble()</span></span>
+<span id="cb75-20"><a href="#cb75-20"></a><span class="co">#     </span></span>
+<span id="cb75-21"><a href="#cb75-21"></a><span class="co">#     # Selecting the first, if nothing is provided</span></span>
+<span id="cb75-22"><a href="#cb75-22"></a><span class="co">#     order_by      &lt;- tolower(order_by[[1]]) </span></span>
+<span id="cb75-23"><a href="#cb75-23"></a><span class="co">#     </span></span>
+<span id="cb75-24"><a href="#cb75-24"></a><span class="co">#     # Convert string stored in a variable to column name (symbol)</span></span>
+<span id="cb75-25"><a href="#cb75-25"></a><span class="co">#     order_by_expr &lt;- rlang::sym(order_by)</span></span>
+<span id="cb75-26"><a href="#cb75-26"></a><span class="co"># </span></span>
+<span id="cb75-27"><a href="#cb75-27"></a><span class="co">#     # Turn of the progress bars ( opposite h2o.show_progress())</span></span>
+<span id="cb75-28"><a href="#cb75-28"></a><span class="co">#     h2o.no_progress()</span></span>
+<span id="cb75-29"><a href="#cb75-29"></a><span class="co">#     </span></span>
+<span id="cb75-30"><a href="#cb75-30"></a><span class="co">#     # 1. Model metrics</span></span>
+<span id="cb75-31"><a href="#cb75-31"></a><span class="co">#     </span></span>
+<span id="cb75-32"><a href="#cb75-32"></a><span class="co">#     get_model_performance_metrics &lt;- function(model_id, test_tbl) {</span></span>
+<span id="cb75-33"><a href="#cb75-33"></a><span class="co">#         </span></span>
+<span id="cb75-34"><a href="#cb75-34"></a><span class="co">#         model_h2o &lt;- h2o.getModel(model_id)</span></span>
+<span id="cb75-35"><a href="#cb75-35"></a><span class="co">#         perf_h2o  &lt;- h2o.performance(model_h2o, newdata = as.h2o(test_tbl))</span></span>
+<span id="cb75-36"><a href="#cb75-36"></a><span class="co">#         </span></span>
+<span id="cb75-37"><a href="#cb75-37"></a><span class="co">#         perf_h2o %&gt;%</span></span>
+<span id="cb75-38"><a href="#cb75-38"></a><span class="co">#             h2o.metric() %&gt;%</span></span>
+<span id="cb75-39"><a href="#cb75-39"></a><span class="co">#             as.tibble() %&gt;%</span></span>
+<span id="cb75-40"><a href="#cb75-40"></a><span class="co">#             select(threshold, tpr, fpr, precision, recall)</span></span>
+<span id="cb75-41"><a href="#cb75-41"></a><span class="co">#         </span></span>
+<span id="cb75-42"><a href="#cb75-42"></a><span class="co">#     }</span></span>
+<span id="cb75-43"><a href="#cb75-43"></a><span class="co">#     </span></span>
+<span id="cb75-44"><a href="#cb75-44"></a><span class="co">#     model_metrics_tbl &lt;- leaderboard_tbl %&gt;%</span></span>
+<span id="cb75-45"><a href="#cb75-45"></a><span class="co">#         mutate(metrics = map(model_id, get_model_performance_metrics, newdata_tbl)) %&gt;%</span></span>
+<span id="cb75-46"><a href="#cb75-46"></a><span class="co">#         unnest(cols = metrics) %&gt;%</span></span>
+<span id="cb75-47"><a href="#cb75-47"></a><span class="co">#         mutate(</span></span>
+<span id="cb75-48"><a href="#cb75-48"></a><span class="co">#           model_id = as_factor(model_id) %&gt;% </span></span>
+<span id="cb75-49"><a href="#cb75-49"></a><span class="co">#                       # programmatically reorder factors depending on order_by</span></span>
+<span id="cb75-50"><a href="#cb75-50"></a><span class="co">#                       fct_reorder(!! order_by_expr, </span></span>
+<span id="cb75-51"><a href="#cb75-51"></a><span class="co">#                                   .desc = ifelse(order_by == "auc", TRUE, FALSE)),</span></span>
+<span id="cb75-52"><a href="#cb75-52"></a><span class="co">#           auc      = auc %&gt;% </span></span>
+<span id="cb75-53"><a href="#cb75-53"></a><span class="co">#                       round(3) %&gt;% </span></span>
+<span id="cb75-54"><a href="#cb75-54"></a><span class="co">#                       as.character() %&gt;% </span></span>
+<span id="cb75-55"><a href="#cb75-55"></a><span class="co">#                       as_factor() %&gt;% </span></span>
+<span id="cb75-56"><a href="#cb75-56"></a><span class="co">#                       fct_reorder(as.numeric(model_id)),</span></span>
+<span id="cb75-57"><a href="#cb75-57"></a><span class="co">#           logloss  = logloss %&gt;% </span></span>
+<span id="cb75-58"><a href="#cb75-58"></a><span class="co">#                       round(4) %&gt;% </span></span>
+<span id="cb75-59"><a href="#cb75-59"></a><span class="co">#                       as.character() %&gt;% </span></span>
+<span id="cb75-60"><a href="#cb75-60"></a><span class="co">#                       as_factor() %&gt;% </span></span>
+<span id="cb75-61"><a href="#cb75-61"></a><span class="co">#                       fct_reorder(as.numeric(model_id))</span></span>
+<span id="cb75-62"><a href="#cb75-62"></a><span class="co">#         )</span></span>
+<span id="cb75-63"><a href="#cb75-63"></a><span class="co">#     </span></span>
+<span id="cb75-64"><a href="#cb75-64"></a><span class="co">#     </span></span>
+<span id="cb75-65"><a href="#cb75-65"></a><span class="co">#     # 1A. ROC Plot</span></span>
+<span id="cb75-66"><a href="#cb75-66"></a><span class="co">#     </span></span>
+<span id="cb75-67"><a href="#cb75-67"></a><span class="co">#     p1 &lt;- model_metrics_tbl %&gt;%</span></span>
+<span id="cb75-68"><a href="#cb75-68"></a><span class="co">#         ggplot(aes(fpr, tpr, color = model_id, linetype = !! order_by_expr)) +</span></span>
+<span id="cb75-69"><a href="#cb75-69"></a><span class="co">#         geom_line(size = size) +</span></span>
+<span id="cb75-70"><a href="#cb75-70"></a><span class="co">#         theme_new +</span></span>
+<span id="cb75-71"><a href="#cb75-71"></a><span class="co">#         labs(title = "ROC", x = "FPR", y = "TPR") +</span></span>
+<span id="cb75-72"><a href="#cb75-72"></a><span class="co">#         theme(legend.direction = "vertical") </span></span>
+<span id="cb75-73"><a href="#cb75-73"></a><span class="co">#         </span></span>
+<span id="cb75-74"><a href="#cb75-74"></a><span class="co">#     </span></span>
+<span id="cb75-75"><a href="#cb75-75"></a><span class="co">#     # 1B. Precision vs Recall</span></span>
+<span id="cb75-76"><a href="#cb75-76"></a><span class="co">#     </span></span>
+<span id="cb75-77"><a href="#cb75-77"></a><span class="co">#     p2 &lt;- model_metrics_tbl %&gt;%</span></span>
+<span id="cb75-78"><a href="#cb75-78"></a><span class="co">#         ggplot(aes(recall, precision, color = model_id, linetype = !! order_by_expr)) +</span></span>
+<span id="cb75-79"><a href="#cb75-79"></a><span class="co">#         geom_line(size = size) +</span></span>
+<span id="cb75-80"><a href="#cb75-80"></a><span class="co">#         theme_new +</span></span>
+<span id="cb75-81"><a href="#cb75-81"></a><span class="co">#         labs(title = "Precision Vs Recall", x = "Recall", y = "Precision") +</span></span>
+<span id="cb75-82"><a href="#cb75-82"></a><span class="co">#         theme(legend.position = "none") </span></span>
+<span id="cb75-83"><a href="#cb75-83"></a><span class="co">#     </span></span>
+<span id="cb75-84"><a href="#cb75-84"></a><span class="co">#     </span></span>
+<span id="cb75-85"><a href="#cb75-85"></a><span class="co">#     # 2. Gain / Lift</span></span>
+<span id="cb75-86"><a href="#cb75-86"></a><span class="co">#     </span></span>
+<span id="cb75-87"><a href="#cb75-87"></a><span class="co">#     get_gain_lift &lt;- function(model_id, test_tbl) {</span></span>
+<span id="cb75-88"><a href="#cb75-88"></a><span class="co">#         </span></span>
+<span id="cb75-89"><a href="#cb75-89"></a><span class="co">#         model_h2o &lt;- h2o.getModel(model_id)</span></span>
+<span id="cb75-90"><a href="#cb75-90"></a><span class="co">#         perf_h2o  &lt;- h2o.performance(model_h2o, newdata = as.h2o(test_tbl)) </span></span>
+<span id="cb75-91"><a href="#cb75-91"></a><span class="co">#         </span></span>
+<span id="cb75-92"><a href="#cb75-92"></a><span class="co">#         perf_h2o %&gt;%</span></span>
+<span id="cb75-93"><a href="#cb75-93"></a><span class="co">#             h2o.gainsLift() %&gt;%</span></span>
+<span id="cb75-94"><a href="#cb75-94"></a><span class="co">#             as.tibble() %&gt;%</span></span>
+<span id="cb75-95"><a href="#cb75-95"></a><span class="co">#             select(group, cumulative_data_fraction, cumulative_capture_rate, cumulative_lift)</span></span>
+<span id="cb75-96"><a href="#cb75-96"></a><span class="co">#         </span></span>
+<span id="cb75-97"><a href="#cb75-97"></a><span class="co">#     }</span></span>
+<span id="cb75-98"><a href="#cb75-98"></a><span class="co">#     </span></span>
+<span id="cb75-99"><a href="#cb75-99"></a><span class="co">#     gain_lift_tbl &lt;- leaderboard_tbl %&gt;%</span></span>
+<span id="cb75-100"><a href="#cb75-100"></a><span class="co">#         mutate(metrics = map(model_id, get_gain_lift, newdata_tbl)) %&gt;%</span></span>
+<span id="cb75-101"><a href="#cb75-101"></a><span class="co">#         unnest(cols = metrics) %&gt;%</span></span>
+<span id="cb75-102"><a href="#cb75-102"></a><span class="co">#         mutate(</span></span>
+<span id="cb75-103"><a href="#cb75-103"></a><span class="co">#             model_id = as_factor(model_id) %&gt;% </span></span>
+<span id="cb75-104"><a href="#cb75-104"></a><span class="co">#                 fct_reorder(!! order_by_expr, </span></span>
+<span id="cb75-105"><a href="#cb75-105"></a><span class="co">#                             .desc = ifelse(order_by == "auc", TRUE, FALSE)),</span></span>
+<span id="cb75-106"><a href="#cb75-106"></a><span class="co">#             auc  = auc %&gt;% </span></span>
+<span id="cb75-107"><a href="#cb75-107"></a><span class="co">#                 round(3) %&gt;% </span></span>
+<span id="cb75-108"><a href="#cb75-108"></a><span class="co">#                 as.character() %&gt;% </span></span>
+<span id="cb75-109"><a href="#cb75-109"></a><span class="co">#                 as_factor() %&gt;% </span></span>
+<span id="cb75-110"><a href="#cb75-110"></a><span class="co">#                 fct_reorder(as.numeric(model_id)),</span></span>
+<span id="cb75-111"><a href="#cb75-111"></a><span class="co">#             logloss = logloss %&gt;% </span></span>
+<span id="cb75-112"><a href="#cb75-112"></a><span class="co">#                 round(4) %&gt;% </span></span>
+<span id="cb75-113"><a href="#cb75-113"></a><span class="co">#                 as.character() %&gt;% </span></span>
+<span id="cb75-114"><a href="#cb75-114"></a><span class="co">#                 as_factor() %&gt;% </span></span>
+<span id="cb75-115"><a href="#cb75-115"></a><span class="co">#                 fct_reorder(as.numeric(model_id))</span></span>
+<span id="cb75-116"><a href="#cb75-116"></a><span class="co">#         ) %&gt;%</span></span>
+<span id="cb75-117"><a href="#cb75-117"></a><span class="co">#         rename(</span></span>
+<span id="cb75-118"><a href="#cb75-118"></a><span class="co">#             gain = cumulative_capture_rate,</span></span>
+<span id="cb75-119"><a href="#cb75-119"></a><span class="co">#             lift = cumulative_lift</span></span>
+<span id="cb75-120"><a href="#cb75-120"></a><span class="co">#         ) </span></span>
+<span id="cb75-121"><a href="#cb75-121"></a><span class="co">#     </span></span>
+<span id="cb75-122"><a href="#cb75-122"></a><span class="co">#     # 2A. Gain Plot</span></span>
+<span id="cb75-123"><a href="#cb75-123"></a><span class="co">#     </span></span>
+<span id="cb75-124"><a href="#cb75-124"></a><span class="co">#     p3 &lt;- gain_lift_tbl %&gt;%</span></span>
+<span id="cb75-125"><a href="#cb75-125"></a><span class="co">#         ggplot(aes(cumulative_data_fraction, gain, </span></span>
+<span id="cb75-126"><a href="#cb75-126"></a><span class="co">#                           color = model_id, linetype = !! order_by_expr)) +</span></span>
+<span id="cb75-127"><a href="#cb75-127"></a><span class="co">#         geom_line(size = size,) +</span></span>
+<span id="cb75-128"><a href="#cb75-128"></a><span class="co">#         geom_segment(x = 0, y = 0, xend = 1, yend = 1, </span></span>
+<span id="cb75-129"><a href="#cb75-129"></a><span class="co">#                      color = "red", size = size, linetype = "dotted") +</span></span>
+<span id="cb75-130"><a href="#cb75-130"></a><span class="co">#         theme_new +</span></span>
+<span id="cb75-131"><a href="#cb75-131"></a><span class="co">#         expand_limits(x = c(0, 1), y = c(0, 1)) +</span></span>
+<span id="cb75-132"><a href="#cb75-132"></a><span class="co">#         labs(title = "Gain",</span></span>
+<span id="cb75-133"><a href="#cb75-133"></a><span class="co">#              x = "Cumulative Data Fraction", y = "Gain") +</span></span>
+<span id="cb75-134"><a href="#cb75-134"></a><span class="co">#         theme(legend.position = "none")</span></span>
+<span id="cb75-135"><a href="#cb75-135"></a><span class="co">#     </span></span>
+<span id="cb75-136"><a href="#cb75-136"></a><span class="co">#     # 2B. Lift Plot</span></span>
+<span id="cb75-137"><a href="#cb75-137"></a><span class="co">#     </span></span>
+<span id="cb75-138"><a href="#cb75-138"></a><span class="co">#     p4 &lt;- gain_lift_tbl %&gt;%</span></span>
+<span id="cb75-139"><a href="#cb75-139"></a><span class="co">#         ggplot(aes(cumulative_data_fraction, lift, </span></span>
+<span id="cb75-140"><a href="#cb75-140"></a><span class="co">#                           color = model_id, linetype = !! order_by_expr)) +</span></span>
+<span id="cb75-141"><a href="#cb75-141"></a><span class="co">#         geom_line(size = size) +</span></span>
+<span id="cb75-142"><a href="#cb75-142"></a><span class="co">#         geom_segment(x = 0, y = 1, xend = 1, yend = 1, </span></span>
+<span id="cb75-143"><a href="#cb75-143"></a><span class="co">#                      color = "red", size = size, linetype = "dotted") +</span></span>
+<span id="cb75-144"><a href="#cb75-144"></a><span class="co">#         theme_new +</span></span>
+<span id="cb75-145"><a href="#cb75-145"></a><span class="co">#         expand_limits(x = c(0, 1), y = c(0, 1)) +</span></span>
+<span id="cb75-146"><a href="#cb75-146"></a><span class="co">#         labs(title = "Lift",</span></span>
+<span id="cb75-147"><a href="#cb75-147"></a><span class="co">#              x = "Cumulative Data Fraction", y = "Lift") +</span></span>
+<span id="cb75-148"><a href="#cb75-148"></a><span class="co">#         theme(legend.position = "none") </span></span>
+<span id="cb75-149"><a href="#cb75-149"></a><span class="co">#     </span></span>
+<span id="cb75-150"><a href="#cb75-150"></a><span class="co">#     </span></span>
+<span id="cb75-151"><a href="#cb75-151"></a><span class="co">#     # Combine using cowplot</span></span>
+<span id="cb75-152"><a href="#cb75-152"></a><span class="co">#     </span></span>
+<span id="cb75-153"><a href="#cb75-153"></a><span class="co">#     # cowplot::get_legend extracts a legend from a ggplot object</span></span>
+<span id="cb75-154"><a href="#cb75-154"></a><span class="co">#     p_legend &lt;- get_legend(p1)</span></span>
+<span id="cb75-155"><a href="#cb75-155"></a><span class="co">#     # Remove legend from p1</span></span>
+<span id="cb75-156"><a href="#cb75-156"></a><span class="co">#     p1 &lt;- p1 + theme(legend.position = "none")</span></span>
+<span id="cb75-157"><a href="#cb75-157"></a><span class="co">#     </span></span>
+<span id="cb75-158"><a href="#cb75-158"></a><span class="co">#     # cowplot::plt_grid() combines multiple ggplots into a single cowplot object</span></span>
+<span id="cb75-159"><a href="#cb75-159"></a><span class="co">#     p &lt;- cowplot::plot_grid(p1, p2, p3, p4, ncol = 2)</span></span>
+<span id="cb75-160"><a href="#cb75-160"></a><span class="co">#     </span></span>
+<span id="cb75-161"><a href="#cb75-161"></a><span class="co">#     # cowplot::ggdraw() sets up a drawing layer</span></span>
+<span id="cb75-162"><a href="#cb75-162"></a><span class="co">#     p_title &lt;- ggdraw() + </span></span>
+<span id="cb75-163"><a href="#cb75-163"></a><span class="co">#     </span></span>
+<span id="cb75-164"><a href="#cb75-164"></a><span class="co">#         # cowplot::draw_label() draws text on a ggdraw layer / ggplot object</span></span>
+<span id="cb75-165"><a href="#cb75-165"></a><span class="co">#         draw_label("H2O Model Metrics", size = 18, fontface = "bold", </span></span>
+<span id="cb75-166"><a href="#cb75-166"></a><span class="co">#                    color = "#2C3E50")</span></span>
+<span id="cb75-167"><a href="#cb75-167"></a><span class="co">#     </span></span>
+<span id="cb75-168"><a href="#cb75-168"></a><span class="co">#     p_subtitle &lt;- ggdraw() + </span></span>
+<span id="cb75-169"><a href="#cb75-169"></a><span class="co">#         draw_label(glue("Ordered by {toupper(order_by)}"), size = 10,  </span></span>
+<span id="cb75-170"><a href="#cb75-170"></a><span class="co">#                    color = "#2C3E50")</span></span>
+<span id="cb75-171"><a href="#cb75-171"></a><span class="co">#     </span></span>
+<span id="cb75-172"><a href="#cb75-172"></a><span class="co">#     # Combine everything</span></span>
+<span id="cb75-173"><a href="#cb75-173"></a><span class="co">#     ret &lt;- plot_grid(p_title, p_subtitle, p, p_legend, </span></span>
+<span id="cb75-174"><a href="#cb75-174"></a><span class="co">#     </span></span>
+<span id="cb75-175"><a href="#cb75-175"></a><span class="co">#                      # Adjust the relative spacing, so that the legends always fits</span></span>
+<span id="cb75-176"><a href="#cb75-176"></a><span class="co">#                      ncol = 1, rel_heights = c(0.05, 0.05, 1, 0.05 * max_models))</span></span>
+<span id="cb75-177"><a href="#cb75-177"></a><span class="co">#     </span></span>
+<span id="cb75-178"><a href="#cb75-178"></a><span class="co">#     h2o.show_progress()</span></span>
+<span id="cb75-179"><a href="#cb75-179"></a><span class="co">#     </span></span>
+<span id="cb75-180"><a href="#cb75-180"></a><span class="co">#     return(ret)</span></span>
+<span id="cb75-181"><a href="#cb75-181"></a><span class="co">#     </span></span>
+<span id="cb75-182"><a href="#cb75-182"></a><span class="co"># }</span></span>
+<span id="cb75-183"><a href="#cb75-183"></a><span class="co"># </span></span>
+<span id="cb75-184"><a href="#cb75-184"></a><span class="co"># h2o_model@leaderboard %&gt;%</span></span>
+<span id="cb75-185"><a href="#cb75-185"></a><span class="co">#     plot_h2o_performance(newdata = testing, order_by = "logloss", </span></span>
+<span id="cb75-186"><a href="#cb75-186"></a><span class="co">#                          size = 0.5, max_models = 4)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","loop":true,"selector":".lightbox","openEffect":"zoom"});</script>
+
+
+
+</body></html>
