@@ -1,0 +1,182 @@
+---
+title: "Automated Machine Learning with H2O"
+author: "Philip Suskin"
+---
+
+# Libraries
+
+```{r}
+library(tidyverse)
+library(h2o)
+
+library(readxl)
+library(GGally)
+
+library(rsample)
+library(recipes)
+```
+
+# Challenge 1
+
+# Data preparation
+
+```{r}
+employee_attrition_tbl <- read_csv("../../HR-Employee-Attrition.csv")
+
+plot_ggpairs <- function(data, color = NULL, density_alpha = 0.5) {
+    
+    color_expr <- enquo(color)
+    
+    if (rlang::quo_is_null(color_expr)) {
+        
+        g <- data %>%
+            ggpairs(lower = "blank") 
+        
+    } else {
+        
+        color_name <- quo_name(color_expr)
+        
+        g <- data %>%
+            ggpairs(mapping = aes_string(color = color_name), 
+                    lower = "blank", legend = 1,
+                    diag = list(continuous = wrap("densityDiag", 
+                                                  alpha = density_alpha))) +
+            theme(legend.position = "bottom")
+    }
+    
+    return(g)
+    
+}
+```
+
+```{r}
+# Explore Features by Category
+
+#   1. Descriptive features: age, gender, marital status 
+employee_attrition_tbl %>%
+    select(Attrition, Age, Gender, MaritalStatus, NumCompaniesWorked, Over18, DistanceFromHome) %>%
+    plot_ggpairs(Attrition)
+
+#   2. Employment features: department, job role, job level
+employee_attrition_tbl %>%
+    select(Attrition, contains("employee"), contains("department"), contains("job")) %>%
+    plot_ggpairs(Attrition) 
+
+#   3. Compensation features: HourlyRate, MonthlyIncome, StockOptionLevel 
+employee_attrition_tbl %>%
+    select(Attrition, contains("income"), contains("rate"), contains("salary"), contains("stock")) %>%
+    plot_ggpairs(Attrition)
+
+#   4. Survey Results: Satisfaction level, WorkLifeBalance 
+employee_attrition_tbl %>%
+    select(Attrition, contains("satisfaction"), contains("life")) %>%
+    plot_ggpairs(Attrition)
+
+#   5. Performance Data: Job Involvment, Performance Rating
+employee_attrition_tbl %>%
+    select(Attrition, contains("performance"), contains("involvement")) %>%
+    plot_ggpairs(Attrition)
+
+#   6. Work-Life Features 
+employee_attrition_tbl %>%
+    select(Attrition, contains("overtime"), contains("travel")) %>%
+    plot_ggpairs(Attrition)
+
+#   7. Training and Education 
+employee_attrition_tbl %>%
+    select(Attrition, contains("training"), contains("education")) %>%
+    plot_ggpairs(Attrition)
+
+#   8. Time-Based Features: Years at company, years in current role
+employee_attrition_tbl %>%
+    select(Attrition, contains("years")) %>%
+    plot_ggpairs(Attrition)
+```
+
+# Analysis
+
+## Q1: What can you deduce about the interaction between Monthly Income and Attrition?
+c. Those that are leaving have a lower Monthly Income
+
+## Q2: What can you deduce about the interaction between Percent Salary Hike and Attrition?
+d. It's difficult to deduce anything based on the visualization
+
+## Q3: What can you deduce about the interaction between Stock Option Level and Attrition?
+b. Those that are staying have a higher stock option level
+
+## Q4: What can you deduce about the interaction between Environment Satisfaction and Attrition?
+a. A higher proportion of those leaving have a low environment satisfaction level
+
+## Q5: What can you deduce about the interaction between Work Life Balance and Attrition?
+b. Those that are staying have a higher density of 2's and 3's
+
+## Q6: What Can you deduce about the interaction between Job Involvement and Attrition?
+a. Those that are leaving have a lower density of 3's and 4's
+
+## Q7: What can you deduce about the interaction between Over Time and Attrition?
+a. The proportion of those leaving that are working Over Time are high compared to those that are not leaving
+
+## Q8: What can you deduce about the interaction between Training Times Last Year and Attrition?
+b. People that leave tend to have less annual trainings
+
+## Q9: What can you deduce about the interaction between Years At Company and Attrition?
+b. People that leave tend to have less working years at the company
+
+## Q10: What can you deduce about the interaction between Years Since Last Promotion and Attrition?
+a. Those that are leaving have more years since last promotion than those that are staying
+
+# Challenge 2
+
+# Data preparation
+
+```{r}
+product_backorders_tbl <- read_csv("../../product_backorders.csv")
+
+set.seed(1)
+
+split_obj <- rsample::initial_split(product_backorders_tbl, prop = 0.75)
+
+train_readable_tb1 <- training(split_obj)
+test_readable_tb1  <- testing(split_obj)
+
+factor_names <- c("went_on_backorder")
+recipie <- recipe(went_on_backorder ~ ., data = train_readable_tb1) %>%  
+           step_zv(all_predictors()) %>% 
+           step_mutate_at(factor_names, fn = as.factor) %>%
+           step_center(all_numeric()) %>%
+           step_scale(all_numeric()) %>%
+           step_dummy(all_nominal(), -all_outcomes()) %>% 
+           prep()
+
+training <- bake(recipie, new_data = train_readable_tb1)
+testing  <- bake(recipie, new_data = test_readable_tb1)
+```
+
+# H2O
+
+```{r}
+h2o.init()
+split_h2o <- h2o.splitFrame(as.h2o(training), ratios = c(0.75), seed = 1)
+train_h2o <- split_h2o[[1]]
+valid_h2o <- split_h2o[[2]]
+test_h2o  <- as.h2o(testing)
+
+y <- "went_on_backorder"
+x <- setdiff(names(train_h2o), y)
+
+h2o_model <- h2o.automl(x = x,
+                        y = y,
+                        training_frame    = train_h2o,
+                        validation_frame  = valid_h2o,
+                        leaderboard_frame = test_h2o,
+                        max_runtime_secs  = 30,
+                        nfolds            = 5)
+
+typeof(h2o_model)
+slotNames(h2o_model)
+h2o_model@leaderboard 
+
+h2o_model@leader 
+pred_tbl <- h2o.predict(h2o_model@leader, newdata = as.h2o(testing)) %>% 
+            as_tibble()
+```

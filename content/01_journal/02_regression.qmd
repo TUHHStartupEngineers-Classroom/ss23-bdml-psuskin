@@ -1,0 +1,93 @@
+---
+title: "Supervised ML - Regression"
+author: "Philip Suskin"
+---
+
+# Libraries
+
+```{r}
+library(tidyverse)
+library(tidyquant)
+library(recipes)
+library(workflows)
+library(rsample)
+library(parsnip)
+```
+
+# Data preparation
+
+```{r}
+bike_orderlines_tbl <- read_rds("../../Business Decisions with Machine Learning/bike_orderlines.rds")
+
+sales_tbl <- bike_orderlines_tbl %>%
+  select(total_price, model, category_2, frame_material) %>%
+  group_by(model, category_2, frame_material) %>%
+  summarise(total_sales = sum(total_price)) %>%
+  ungroup() %>%
+  arrange(desc(total_sales))
+
+sales_tbl %>%
+  mutate(category_2 = as_factor(category_2) %>%
+           fct_reorder(total_sales, .fun = max) %>%
+           fct_rev()) %>%
+  ggplot(aes(frame_material, total_sales)) +
+  geom_violin() +
+  geom_jitter(width = 0.1, alpha = 0.5, color = "#2c3e50") +
+  facet_wrap(~ category_2) +
+  scale_y_continuous(labels = scales::dollar_format(scale = 1e-6, suffix = "M", accuracy = 0.1)) +
+  theme_tq() +
+  labs(
+      title = "Total Sales for Each Model",
+      x = "Frame Material", y = "Revenue"
+  )
+```
+
+# Recipe
+
+```{r}
+recipe_obj <- recipe(price ~ frame_material + category_2 + model, data = bike_orderlines_tbl) %>%
+  step_dummy(all_nominal(), -frame_material, -category_2, -model, one_hot = T) %>%
+  prep()
+```
+
+# Training and testing data
+
+```{r}
+bike_orderlines_tbl %>% distinct(category_2)
+
+set.seed(1)
+
+split_obj <- rsample::initial_split(bike_orderlines_tbl, prop = 0.8, strata = "category_2")
+split_obj %>% training() %>% distinct(category_2)
+split_obj %>% testing() %>% distinct(category_2)
+
+train_tbl <- training(split_obj)
+test_tbl  <- testing(split_obj)
+
+train_tbl <- train_tbl %>% set_names(str_replace_all(names(train_tbl), " |-", "_"))
+test_tbl  <- test_tbl  %>% set_names(str_replace_all(names(test_tbl),  " |-", "_"))
+
+train_transformed_tbl <- bake(recipe_obj, new_data = train_tbl)
+test_transformed_tbl <- bake(recipe_obj, new_data = test_tbl) 
+```
+
+# Model
+
+```{r}
+model_reg_lm <- linear_reg(mode = "regression") %>% set_engine("lm")
+```
+
+# Workflow
+
+```{r}
+workflow <- workflow(preprocessor = NULL, spec = NULL) %>% 
+  workflows::add_recipe(recipe_obj) %>%
+  workflows::add_model(model_reg_lm)
+
+fitted_workflow <- fit(workflow, train_transformed_tbl)
+
+metrics <- fitted_workflow %>%
+           predict(new_data = test_transformed_tbl) %>%
+           bind_cols(test_transformed_tbl %>% select(price)) %>%
+           yardstick::metrics(truth = price, estimate = .pred) %>% print()
+```
